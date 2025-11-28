@@ -23,11 +23,16 @@ app = FastAPI(title="Inventory Management API", version="1.0.0")
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=["*"],  # Allow all origins for now
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Root endpoint for health check
+@app.get("/")
+def read_root():
+    return {"status": "ok", "message": "Inventory Management API is running"}
 
 # WebSocket connections for real-time updates
 class ConnectionManager:
